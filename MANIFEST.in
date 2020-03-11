@@ -1,0 +1,7 @@
+include pyproject.toml README.md CHANGELOG.md LICENSE setup.py
+recursive-include boilersson *.py *.json *.yaml
+
+include requirements.txt
+prune tests
+exclude .pylintrc pytest.ini tox.ini .gitlab-ci.yml .coveragerc
+prune tests

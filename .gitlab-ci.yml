@@ -1,0 +1,48 @@
+stages:
+  - unittests
+  - check
+  - devpi
+
+.base_stage:
+  image: python:3.8
+  before_script:
+    - pip install tox==3.14.5 devpi-client devpi-common
+  script:
+    - PYTHONPATH=${CI_PROJECT_DIR} tox -e ${CI_JOB_NAME}
+
+lint:
+  extends: .base_stage
+  stage: check
+
+check:
+  extends: .base_stage
+  stage: check
+
+py36:
+  extends: .base_stage
+  stage: unittests
+  image: python:3.6
+
+py37:
+  extends: .base_stage
+  stage: unittests
+  image: python:3.7
+
+py38:
+  extends: .base_stage
+  stage: unittests
+
+# note: The $DEVPI_* environment variables used below
+# have to be set in settings of gitlab's project CI/CD
+upload_package:
+  extends: .base_stage
+  stage: devpi
+  script:
+    - devpi use $DEVPI_STAGING_URL
+    - devpi login $DEVPI_STAGING_USERNAME --password $DEVPI_STAGING_PASSWORD
+    - devpi upload
+  only:
+    - /^[vV]?(\d+\.\d+)?((?:\.|rc|a|b)\d+)?$/
+  except:
+    - branches
+    - merge_requests

@@ -1,0 +1,27 @@
+[BASIC]
+max-line-length = 120
+
+[MESSAGES CONTROL]
+disable =
+    W0621,
+# W0621: Redefining name 'some_fixture_name' from outer scope (redefined-outer-name)
+    C0103,
+# C0103, # Variable name "f" doesn't conform to snake_case naming style (invalid-name)
+    C0111,
+# C0111 Missing docstring
+    R,
+# R0903 Too few public methods
+# R0904 Too many public methods
+# R0914 Too many local variables
+# R0912 Too many branches
+# R0915 Too many statements
+# R0913 Too many arguments
+# R0923: Interface not implemented
+    W0703,
+# W0703: Catching too general exception Exception (broad-except)
+    W1510,
+# W1510: (subprocess-run-check)
+    W1202,
+# Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+    W0511
+# W0511 is about forbidden TODO - Why not writing todo?
